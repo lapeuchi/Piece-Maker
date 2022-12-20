@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public float hp;
     public float speed;
 
-    [SerializeField] TMP_Text hp_Text;
+    [SerializeField] TextMeshProUGUI hp_Text;
     
     void Start()
     {
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Debug.Log("Player is dead.");
-        // Gameover
+        
     }
 
     void SetHPText()

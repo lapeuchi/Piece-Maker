@@ -31,6 +31,9 @@ public class EnemyController : MonoBehaviour
                 case State.Attack:
                     anim.CrossFade("Attack", 0.1f);
                     break;
+                case State.Hit:
+                    anim.CrossFade("Hit", 0.1f);
+                    break;
                 case State.Die:
                     anim.CrossFade("Die", 0.1f);
                     break;
@@ -76,7 +79,6 @@ public class EnemyController : MonoBehaviour
         attackRange = 3;
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
-
         target = GameObject.Find("Player").transform;
 
         nav.speed = moveSpeed;
@@ -112,15 +114,17 @@ public class EnemyController : MonoBehaviour
             State = State.Die;
     }
 
+    public void OnHit()
+    {
+        if ((target.position - transform.position).magnitude >= attackRange)
+            State = State.Move;
+        else
+            State = State.Attack;
+    }
+
     public void OnAttacked()
     {
-        //Scripting for attack event
-        
-        if(target != null)
-        {
-            //Damaged
-            Debug.Log("Attacked");
-        }
+        target.GetComponent<PlayerController>().Hit(damage);
     }
 
     public void Die()
