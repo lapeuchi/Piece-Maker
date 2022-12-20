@@ -120,6 +120,8 @@ public class OVRGrabbable : MonoBehaviour
     {
         m_grabbedBy = hand;
         m_grabbedCollider = grabPoint;
+
+        print("asd");
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 

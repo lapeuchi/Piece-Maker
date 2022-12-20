@@ -9,13 +9,14 @@ public class MagazineController : MonoBehaviour
     public int curBullet;
     
     public float reloadTime;
-    bool isReloading;
+    public bool isReloading;
 
     [SerializeField] public TMP_Text Bullet_Text;
 
     void Start()
     {
         curBullet = maxBullet;
+        SetBulletText();
     }
     
     void Update()
@@ -36,6 +37,7 @@ public class MagazineController : MonoBehaviour
         
         while (timer < reloadTime)
         {
+            timer += Time.deltaTime;
             Bullet_Text.text = "Reloading " + (int)(reloadTime - timer);
             yield return null;
         }
@@ -45,7 +47,7 @@ public class MagazineController : MonoBehaviour
         isReloading = false;
     }
 
-    void SetBulletText()
+    public void SetBulletText()
     {
         Bullet_Text.text = $"{curBullet} / {maxBullet} ";
     }

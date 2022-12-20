@@ -10,16 +10,17 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    void Update()
+    private void Update()
     {
-        
+        transform.Translate(Vector3.forward * 5 * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Bullet"))
+        if(other.gameObject.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyController>().OnDamaged(5);
+            Debug.Log("Hit");
+            other.GetComponent<EnemyController>().OnDamaged(damage);
         }
     }
 }

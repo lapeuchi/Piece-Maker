@@ -17,7 +17,7 @@ public class SimpleShoot : MonoBehaviour
 
     [Header("Settings")]
     [Tooltip("Specify time to destory the casing object")] [SerializeField] private float destroyTimer = 2f; // 떨어진 탄피 제거 시간
-    [Tooltip("Bullet Speed")] [SerializeField] private float shotPower = 500f; // 총알 힘
+    [Tooltip("Bullet Speed")] [SerializeField] private float shotPower = 100f; // 총알 힘
     [Tooltip("Casing Ejection Speed")] [SerializeField] private float ejectPower = 150f; // 탄피 배출 힘
     
     [SerializeField] private MagazineController magazine;
@@ -49,18 +49,16 @@ public class SimpleShoot : MonoBehaviour
         //     // Calls animation on the gun that has the relevant animation events that will fire
         //     gunAnimator.SetTrigger("Fire");
         // }
-        
-
-        if (grabbable.isGrabbed)
+        if(magazine.curBullet > 0)
         {
-            if(OVRInput.GetDown(shootButton, grabbable.grabbedBy.GetController()))
+            if (OVRInput.GetDown(shootButton, OVRInput.Controller.RTouch) && !gunAnimator.GetCurrentAnimatorStateInfo(0).IsName("Fire"))
             {
                 gunAnimator.SetTrigger("Fire");
-                audioSource.Play();
             }
-            else if(OVRInput.GetDown(reloadButton, grabbable.grabbedBy.GetController()))
+            else if (OVRInput.GetDown(reloadButton, OVRInput.Controller.RTouch) && magazine.curBullet != magazine.maxBullet)
             {
-                magazine.Reload();
+                if (magazine.isReloading == false)
+                    magazine.Reload();
             }
         }
     }
@@ -89,12 +87,15 @@ public class SimpleShoot : MonoBehaviour
         { return; }
 
         // Create a bullet and add force on it in direction of the barrel
-        Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation).GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower, ForceMode.Impulse);
+        Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation);//.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower, ForceMode.Impulse);
 
-        if (!magazine)
+        if (magazine != null)
         {
             magazine.curBullet--;
-            if(magazine.curBullet == 0)
+            audioSource.Play();
+            magazine.SetBulletText();
+
+            if (magazine.curBullet == 0)
             {
                 magazine.Reload();
             }
