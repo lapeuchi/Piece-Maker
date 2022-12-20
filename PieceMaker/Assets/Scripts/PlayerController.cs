@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float hp;
-    public float speed;
+    public float hp = 100f;
+    public float speed = 3.5f;
 
     [SerializeField] TextMeshProUGUI hp_Text;
     
@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     
     void Die()
     {
-        Debug.Log("Player is dead.");
         GameOver();
     }
 

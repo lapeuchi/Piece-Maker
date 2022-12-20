@@ -97,14 +97,15 @@ public class EnemyController : MonoBehaviour
         }
 
         nav.SetDestination(target.position);
-        Quaternion qua = Quaternion.LookRotation(target.position);
-        transform.rotation = Quaternion.Lerp(transform.rotation, qua, 20 * Time.deltaTime);
     }
 
     void UpdateAttack()
     {
         if ((target.position - transform.position).magnitude >= attackRange)
             State = State.Move;
+
+        Quaternion qua = Quaternion.LookRotation(target.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, qua, 20 * Time.deltaTime);
     }
 
     public void OnDamaged(float damage)

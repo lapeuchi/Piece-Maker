@@ -47,7 +47,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -61,7 +61,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0.5727052
-        functionName: OnAttack
+        functionName: OnAttacked
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: e089db66825736f4a8b25fe52e5e2b18, type: 3}
         floatParameter: 0
