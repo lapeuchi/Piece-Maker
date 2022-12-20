@@ -44,11 +44,11 @@ public class SimpleShoot : MonoBehaviour
     void Update()
     {
         // If you want a different input, change it here
-        // if (Input.GetButtonDown("Fire1"))
-        // {
-        //     // Calls animation on the gun that has the relevant animation events that will fire
-        //     gunAnimator.SetTrigger("Fire");
-        // }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            // Calls animation on the gun that has the relevant animation events that will fire
+            gunAnimator.SetTrigger("Fire");
+        }
         if(magazine.curBullet > 0)
         {
             if (OVRInput.GetDown(shootButton, OVRInput.Controller.RTouch) && !gunAnimator.GetCurrentAnimatorStateInfo(0).IsName("Fire"))

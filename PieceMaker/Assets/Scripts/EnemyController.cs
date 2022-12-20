@@ -5,9 +5,10 @@ using UnityEngine.AI;
 
 enum State
 {
-    Move,
+    None,
+    Landing,
+    Moving,
     Attack,
-    Hit,
     Die
 }
 
@@ -25,14 +26,11 @@ public class EnemyController : MonoBehaviour
 
             switch(State)
             {
-                case State.Move:
-                    anim.CrossFade("Move", 0.1f);
+                case State.Moving:
+                    anim.CrossFade("Moving", 0.1f);
                     break;
                 case State.Attack:
                     anim.CrossFade("Attack", 0.1f);
-                    break;
-                case State.Hit:
-                    anim.CrossFade("Hit", 0.1f);
                     break;
                 case State.Die:
                     anim.CrossFade("Die", 0.1f);
@@ -45,25 +43,40 @@ public class EnemyController : MonoBehaviour
 
     Animator anim;
     NavMeshAgent nav;
-    Transform target;       //your self
+    Transform target;
     
-    //stat
-    float hp;
-    float damage;
-    float moveSpeed;
-    float attackRange;
+    [Header("Stat")]
+    [SerializeField] float hp;
+    [SerializeField] float damage;
+    [SerializeField] float moveSpeed;
+    [SerializeField] float attackRange;
+
+    public GameObject bulletPrefab;
+    public GameObject healPrefab;
+    [SerializeField] Transform FirePos;
 
     private void Start()
     {
-        Init();    
+        
+        hp = 20f;
+        damage = 5f;
+        moveSpeed = 1.5f;
+        attackRange = 6;
+
+        anim = GetComponentInChildren<Animator>();
+        nav = GetComponent<NavMeshAgent>();
+        target = GameObject.Find("Player").transform;
+
+        nav.speed = moveSpeed;
+        State = State.Moving;
     }
 
     private void Update()
     {
         switch(State)
         {
-            case State.Move:
-                UpdateMove();
+            case State.Moving:
+                UpdateMoving();
                 break;
             case State.Attack:
                 UpdateAttack();
@@ -71,38 +84,35 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void Init()
+    void UpdateMoving()
     {
-        hp = 20f;
-        damage = 5f;
-        moveSpeed = 1.5f;
-        attackRange = 3;
-        anim = GetComponent<Animator>();
-        nav = GetComponent<NavMeshAgent>();
-        target = GameObject.Find("Player").transform;
-
-        nav.speed = moveSpeed;
-        State = State.Move;
-    }
-
-    void UpdateMove()
-    {
-        if((target.position - transform.position).magnitude < attackRange - 1f)
+        // 목표가 사거리 내에 있을 때 -> 공격
+        if((target.position - transform.position).magnitude < attackRange-1f)
         {
             State = State.Attack;
             nav.SetDestination(transform.position);
             return;
         }
-
         nav.SetDestination(target.position);
-        Quaternion qua = Quaternion.LookRotation(target.position);
-        transform.rotation = Quaternion.Lerp(transform.rotation, qua, 20 * Time.deltaTime);
+        
     }
 
     void UpdateAttack()
     {
         if ((target.position - transform.position).magnitude >= attackRange)
-            State = State.Move;
+            State = State.Moving;
+
+        Quaternion lookPosition = Quaternion.LookRotation(target.position);
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookPosition, 20 * Time.deltaTime);
+    }
+
+    public void SummonBullet()
+    {
+        Instantiate(bulletPrefab, FirePos.position, FirePos.rotation);
+    }
+    public void SummonHeal()
+    {
+        Instantiate(healPrefab, transform.position + Vector3.up, transform.rotation);
     }
 
     public void OnDamaged(float damage)
@@ -115,16 +125,12 @@ public class EnemyController : MonoBehaviour
     }
 
     public void OnHit()
-    {
+    {   
+        if(target == null) return;
         if ((target.position - transform.position).magnitude >= attackRange)
-            State = State.Move;
+            State = State.Moving;
         else
             State = State.Attack;
-    }
-
-    public void OnAttacked()
-    {
-        target.GetComponent<PlayerController>().Hit(damage);
     }
 
     public void Die()

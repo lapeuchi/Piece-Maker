@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class Damagable : MonoBehaviour
 {
-    [SerializeField] Boss boss;
+    [SerializeField] EnemyController enemy;
     [SerializeField] float factor;
 
     private void Awake()
     {
-        GameObject.Find("Boss").GetComponent<Boss>();
+        enemy = GetComponentInParent<EnemyController>();
+        gameObject.tag = "Enemy";
     }
 
     public void Hit(float damage)
     {
         damage *= factor;
         Debug.Log("BossHit " + damage);
-        boss.Hit(damage);   
+        enemy.OnDamaged(damage);
     }
 }
