@@ -77,7 +77,7 @@ public class EnemyController : MonoBehaviour
         anim = GetComponent<Animator>();
         nav = GetComponent<NavMeshAgent>();
 
-        target = GameObject.Find("Target").transform;
+        target = GameObject.Find("Player").transform;
 
         nav.speed = moveSpeed;
         State = State.Move;
