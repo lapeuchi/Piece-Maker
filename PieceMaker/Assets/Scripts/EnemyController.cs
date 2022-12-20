@@ -45,19 +45,17 @@ public class EnemyController : MonoBehaviour
 
     Animator anim;
     NavMeshAgent nav;
-    Transform target;
+    Transform target;       //your self
     
     //stat
     float hp;
     float damage;
     float moveSpeed;
     float attackRange;
-    static int priority = 0;
 
     private void Start()
     {
-        Init();
-        nav.avoidancePriority = priority++;
+        Init();    
     }
 
     private void Update()

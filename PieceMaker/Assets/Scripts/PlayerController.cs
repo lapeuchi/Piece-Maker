@@ -31,17 +31,11 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Debug.Log("Player is dead.");
-        GameOver();
+        
     }
 
     void SetHPText()
     {
         hp_Text.text = $"HP: {(int)hp}";
-    }
-
-    public void GameOver()
-    {
-        GameObject go = Resources.Load<GameObject>("Prefabs/UI_GameOver");
-        Instantiate(go, transform.position + Vector3.forward, transform.rotation);
     }
 }
