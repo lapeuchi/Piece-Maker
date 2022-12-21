@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.AI;   
 
 enum State
 {
@@ -57,11 +57,23 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        hp = 100f;
+        moveSpeed = 4f;
         
-        hp = 20f;
-        damage = 5f;
-        moveSpeed = 1.5f;
-        attackRange = 6;
+        int r = Random.Range(0, 3);
+        if(r == 0)
+        {
+            attackRange = 7;
+        }
+        else if (r == 1)
+        {
+            attackRange = 15;
+        }
+        else
+        {
+            attackRange = 20;
+        }
+       
 
         anim = GetComponentInChildren<Animator>();
         nav = GetComponent<NavMeshAgent>();
@@ -135,6 +147,7 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
+        GameManager.instance.cnt--;
         Destroy(gameObject);
     }
 }

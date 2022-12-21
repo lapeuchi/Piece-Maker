@@ -5,13 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     float damage = 5;
-    float speed = 5;
+    float speed = 20f;
 
     void Start()
     {
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 20f);
     }
-
+    
     private void Update()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
@@ -26,6 +26,8 @@ public class Bullet : MonoBehaviour
             if(damagable != null)
                 damagable.Hit(damage);
             GetComponent<ExplosionObject>().Explosion();
-        }  
+            Destroy(gameObject);
+            
+        }
     }
 }

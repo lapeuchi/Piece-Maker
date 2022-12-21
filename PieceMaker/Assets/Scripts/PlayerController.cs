@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
         }
        
     }
-
+    
     public void Hit()
     {
         if(hp <= 0) return;
@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
         SetHPText();
     }
 
-    void Heal()
+    public void Heal()
     {
         hp += dif;
         if(hp >= maxHp) hp = maxHp;
@@ -63,31 +63,13 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         Debug.Log("Player is dead.");
-        GameManager.instance.GameOver();
+        GameManager.instance.GameOver(false);
         SetHPText();
     }
 
     void SetHPText()
     {
         hp_Text.text = $"HP: {(int)hp}";
-    }
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.gameObject.CompareTag("Heal"))
-        {
-            Debug.Log("Heal");
-            hit.gameObject.GetComponent<ExplosionObject>().Explosion();
-            Destroy(hit.gameObject);
-            Heal();
-        }   
-        else if (hit.gameObject.CompareTag("EnemyBullet"))
-        {
-            Debug.Log("Hit");
-            hit.gameObject.GetComponent<ExplosionObject>().Explosion();
-            Destroy(hit.gameObject);
-            Hit();
-        }
     }
 
 }

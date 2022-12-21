@@ -12,10 +12,22 @@ public class EnemyBullet : MonoBehaviour
         target = GameObject.FindWithTag("Player").transform;
         dir = (target.position - transform.position).normalized;
         dir.y = 0;
+        Destroy(gameObject, 20f);
     }
 
     void Update()
     {
         transform.position += Time.deltaTime * speed * dir;
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Hit");
+            gameObject.GetComponent<ExplosionObject>().Explosion();
+            Destroy(gameObject);
+            other.gameObject.GetComponent<PlayerController>().Hit();
+        }
     }
 }
