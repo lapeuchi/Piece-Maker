@@ -18,6 +18,8 @@ public class EnemyBullet : MonoBehaviour
     void Update()
     {
         transform.position += Time.deltaTime * speed * dir;
+
+        transform.rotation = Quaternion.LookRotation(dir.normalized);
     }
 
     private void OnTriggerEnter(Collider other) 

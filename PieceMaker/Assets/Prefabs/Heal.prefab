@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 6963017952910913229}
   - component: {fileID: 6972511980234118365}
   - component: {fileID: 4899298643134906177}
-  - component: {fileID: 5849262538495314411}
+  - component: {fileID: 5866113450415944205}
+  - component: {fileID: -4278693684011408993}
   m_Layer: 6
   m_Name: Heal
   m_TagString: Heal
@@ -4909,7 +4910,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -4922,7 +4923,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7007603414929305123}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.35
@@ -5002,7 +5003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 6543034334329114564, guid: 35ce7d245760946dd940c30fc05d1c48, type: 3}
---- !u!114 &5849262538495314411
+--- !u!114 &5866113450415944205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5011,7 +5012,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7007603414929305123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 56f97f30b52844171961c90331212298, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4278693684011408993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7007603414929305123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1a7708e76601b4ea829921c33bc624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_allowOffhandGrab: 1
@@ -5019,6 +5032,7 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+  m_materialColorField: 
 --- !u!1 &7009053959795985245
 GameObject:
   m_ObjectHideFlags: 0

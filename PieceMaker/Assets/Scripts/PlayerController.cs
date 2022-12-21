@@ -19,22 +19,16 @@ public class PlayerController : MonoBehaviour
         maxHp = 100;
 
         hp = maxHp;
-        dif = 50;
+        dif = 20;
         SetHPText();
     }
 
     void Update()
     {
-        // 테스트 키
-        if (OVRInput.GetDown(OVRInput.Button.Three) || Input.GetKeyDown(KeyCode.Z))
+        
+        if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.X))
         {
-            Hit();
-        }
-        if (OVRInput.GetDown(OVRInput.Button.Four) || Input.GetKeyDown(KeyCode.X))
-        {
-            Heal();
-            //GameManager.instance.GameOver();
-            //UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
         }
        
     }
@@ -58,6 +52,7 @@ public class PlayerController : MonoBehaviour
     {
         hp += dif;
         if(hp >= maxHp) hp = maxHp;
+        SetHPText();
     }
     
     void Die()

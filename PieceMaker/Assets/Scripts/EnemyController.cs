@@ -74,7 +74,6 @@ public class EnemyController : MonoBehaviour
             attackRange = 20;
         }
        
-
         anim = GetComponentInChildren<Animator>();
         nav = GetComponent<NavMeshAgent>();
         target = GameObject.Find("Player").transform;
